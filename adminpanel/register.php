@@ -1,7 +1,6 @@
+<?php session_start(); ?>
 <?php include("includes/header.php") ?>
 <?php include("includes/navbar.php") ?>
-
-
 
 <!-- Modal -->
 <div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -29,7 +28,7 @@
                 </div> 
                 <div class="form-group">
                     <label for="confirmpassword">Confirm password</label>
-                    <input type="confirmpassword" class="form-control" name="confirmpassword" placeholder="Confirm Password">
+                    <input type="password" class="form-control" name="confirmpassword" placeholder="Confirm Password">
                 </div> 
         </div>
         <div class="modal-footer">
@@ -53,28 +52,51 @@
             </h6>
         </div>
         <div class="card-body">
+
+        <?php if(isset($_SESSION['success']) && $_SESSION['success']!=''){
+            echo '<div class="alert alert-success" role="alert">
+            '.$_SESSION['success'].'
+          </div>' ;
+            unset($_SESSION['success']) ;
+        } ?>
+
+        <?php if(isset($_SESSION['status']) && $_SESSION['status']!=''){
+            echo '<div class="alert alert-danger" role="alert">
+            '.$_SESSION['status'].'
+          </div>' ;
+            unset($_SESSION['status']) ;
+        } ?>
             <div class="table-responsive">
+
+            <?php 
+            $conn = mysqli_connect('localhost' , 'root' , '' ,'adminpanel'); 
+            $query = "SELECT * FROM register" ;
+            $query_run = mysqli_query($conn , $query) ;
+            ?>
             <table class="table">
                 <thead>
                     <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Office</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">Salary</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">EDIT</th>
+                    <th scope="col">DELETE</th>
                     </tr>
                 </thead>
                 <tbody>
+                <?php if (mysqli_num_rows($query_run)) : ?>
+                    <?php while($row = mysqli_fetch_assoc($query_run)) : ?>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td><?php echo $row['id'] ; ?></td>
+                        <td><?php echo $row['username'] ; ?></td>
+                        <td><?php echo $row['email'] ; ?></td>
+                        <td><?php echo $row['password'] ; ?></td>
+                        <td><button type="submit" class ="btn btn-success">EDIT</button></td>
+                        <td><button type="submit" class ="btn btn-danger">DELETE</button></td>
                     </tr>
-                    <tr>
+                    <?php endwhile; ?>
+                <?php endif ;?>
                 </tbody>
                 </table>
             </div>
