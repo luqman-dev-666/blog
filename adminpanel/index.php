@@ -1,3 +1,5 @@
+<?php include_once 'config/db.php' ; ?>
+<?php include_once 'security.php' ; ?>
 <?php include("includes/header.php") ?>
 <?php include("includes/navbar.php") ?>
 
@@ -19,8 +21,13 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Registered ADMINS</div>
+                      <?php 
+                        $query = "SELECT id FROM register ORDER BY id" ;
+                        $result = mysqli_query($conn , $query) ;
+                        $total = mysqli_num_rows($result);
+                      ?>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $total ; ?></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>

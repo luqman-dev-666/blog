@@ -1,6 +1,8 @@
-<?php session_start(); ?>
+<?php include_once 'config/db.php' ; ?>
+<?php include_once 'security.php' ; ?>
 <?php include("includes/header.php") ?>
 <?php include("includes/navbar.php") ?>
+
 
 <!-- Modal -->
 <div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -12,6 +14,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
       <form method="POST" action="code.php">
         <div class="modal-body">
                 <div class="form-group">
@@ -92,8 +95,18 @@
                         <td><?php echo $row['username'] ; ?></td>
                         <td><?php echo $row['email'] ; ?></td>
                         <td><?php echo $row['password'] ; ?></td>
-                        <td><button type="submit" class ="btn btn-success">EDIT</button></td>
-                        <td><button type="submit" class ="btn btn-danger">DELETE</button></td>
+                        <td>
+                        <form action="register_edit.php" method="POST">
+                          <input type="hidden" name="edit_id" value="<?php echo $row['id'];?>">
+                          <button type="submit" name="edit_btn" class ="btn btn-success">EDIT</button>
+                        </form>
+                        </td>
+                        <td>
+                        <form action="code.php" method="POST">
+                          <input type="hidden" name="delete_id" value="<?php echo $row['id'] ; ?>">
+                          <button type="submit" name="delete_btn" class ="btn btn-danger">DELETE</button>
+                        </form>
+                        </td>
                     </tr>
                     <?php endwhile; ?>
                 <?php endif ;?>
