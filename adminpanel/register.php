@@ -33,6 +33,7 @@
                     <label for="confirmpassword">Confirm password</label>
                     <input type="password" class="form-control" name="confirmpassword" placeholder="Confirm Password">
                 </div> 
+                <input type="hidden" name="usertype" value="admin">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -83,6 +84,7 @@
                     <th scope="col">Username</th>
                     <th scope="col">Email</th>
                     <th scope="col">Password</th>
+                    <th scope="col">Usertype</th>
                     <th scope="col">EDIT</th>
                     <th scope="col">DELETE</th>
                     </tr>
@@ -95,6 +97,7 @@
                         <td><?php echo $row['username'] ; ?></td>
                         <td><?php echo $row['email'] ; ?></td>
                         <td><?php echo $row['password'] ; ?></td>
+                        <td><?php echo $row['usertype'] ; ?></td>
                         <td>
                         <form action="register_edit.php" method="POST">
                           <input type="hidden" name="edit_id" value="<?php echo $row['id'];?>">

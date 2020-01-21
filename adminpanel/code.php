@@ -2,16 +2,20 @@
 
 <?php 
 
+
+//////////////////////////////////////////////// Register page ////////////////////////////////////////////////////////////
+
 if(isset($_POST['registerbtn'])){
 
     $username = $_POST['username'];
     $email = $_POST['email'];
-    $password = $_POST['password'] ;
+    $password = $_POST['password'];
     $cpassword = $_POST['confirmpassword'];
+    $usertype = $_POST['usertype'];
 
     if ($password === $cpassword){
 
-        $query = "INSERT INTO register (username , email , password ) VALUES ('$username' , '$email' ,'$password') " ;
+        $query = "INSERT INTO register (username , email , password , usertype) VALUES ('$username' , '$email' ,'$password' ,'$usertype') " ;
     
         $query_run = mysqli_query($conn , $query) ;
 
@@ -34,8 +38,10 @@ if (isset($_POST['updatebtn'])){
     $username = $_POST['edit_username'] ;
     $email = $_POST['edit_email'] ;
     $password  = $_POST['edit_password'] ;
+    $usertype = $_POST['update_usertype'] ;
 
-    $query = "UPDATE register SET username = '$username' ,email = '$email' , password = '$password' WHERE id='$id'" ;
+    $query = "UPDATE register SET username = '$username' ,email = '$email' , password = '$password' , usertype ='$usertype' WHERE id='$id'" ;
+
     $result = mysqli_query($conn , $query) ;
     $_SESSiON['success'] = "Your Data Is Updated";
 
@@ -61,19 +67,57 @@ if(isset($_POST['delete_btn'])){
     }
 }
 
-if(isset($_POST['login_btn'])){
 
-    $email = $_POST['email'] ;
-    $password = $_POST['password'] ;
+////////////////////////////////////////////////// About page ////////////////////////////////////////////////////////////
 
-    $query = "SELECT * FROM register WHERE email='$email' AND password='$password' LIMIT 1" ;
-    $query_run = mysqli_query($conn , $query); 
+if(isset($_POST['about_save'])){
+    $title = $_POST['title'] ;
+    $subtitle = $_POST['subtitle'] ;
+    $description = $_POST['description'] ;
+    $links = $_POST['links'] ;
 
-    if(mysqli_fetch_array($query_run)){
-        $_SESSION['username'] = $email ;
-        header('location:index.php') ; 
-    }else {
-        $_SESSION['status'] = "Email / Password invalid" ;
-        header('location:login.php') ;
+    $query = "INSERT INTO abouts (title,subtitle,description,links) VALUES ('$title' , '$subtitle' ,'$description' , '$links')" ;
+    $query_run = mysqli_query($conn , $query) ;
+    if($query_run){
+        $_SESSION['success'] = "About us Added";
+        header('location:about.php');
+    }else{
+        $_SESSION['status'] = "About us Not Added";
+        header('location:about.php');
     }
 }
+
+if (isset($_POST['updatebtn_about'])){
+    
+    $id = $_POST['id'] ;
+    $title = $_POST['title'] ;
+    $subtitle = $_POST['subtitle'] ;
+    $description  = $_POST['description'] ;
+    $links = $_POST['links'] ;
+
+    $query = "UPDATE abouts SET title = '$title' ,subtitle = '$subtitle' , description = '$description' , links ='$links' WHERE id='$id'" ;
+
+    $result = mysqli_query($conn , $query) ;
+    
+    if($result){
+        $_SESSiON['success'] = "Your Data Is Updated" ;
+        header('location:about.php');
+    }else{
+        $_SESSiON['status'] = "Your Data is not Updated" ;
+        header('location:about.php');
+    }
+}
+
+if(isset($_POST['delete_btn_about'])){
+    $id = $_POST['delete_id'] ;
+    $query = "DELETE FROM abouts WHERE id='$id' " ;
+    $result = mysqli_query($conn , $query) ;
+    if($result){
+        $_SESSION['success'] = "DELETED" ;
+        header('location:about.php') ;
+    }else{
+        $_SESSION['status'] = "Not Deleted" ;
+        header('location:about.php') ;
+    }
+}
+

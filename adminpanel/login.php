@@ -23,7 +23,7 @@
                           }
                         ?>
                     </div>
-                    <form class="user" method="POST" action="code.php">
+                    <form class="user" method="POST" action="logincode.php">
                         <div class="form-group">
                             <input type="email" class="form-control form-control-user" name="email" placeholder="Enter Email Address...">
                         </div>

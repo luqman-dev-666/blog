@@ -10,7 +10,6 @@
         </div>
         <div class="card-body">
             <?php 
-
                 if(isset($_POST['edit_btn'])){
 
                     $id = $_POST['edit_id'] ;
@@ -38,6 +37,13 @@
                             <label for="password">Password</label>
                             <input type="password" class="form-control" name="edit_password" value ="<?php echo $user   ['password'] ;?>" placeholder="Password">
                         </div> 
+                        <div class="form-group">
+                            <label for="Usertype">Usertype</label>
+                            <select name="update_usertype" class="form-control">
+                                <option value="admin">Admin</option>
+                                <option value="user">User</option>
+                            </select>
+                        </div>
 
                         <a href="register.php" class="btn btn-danger">Cancel</a>
                         <button class="btn btn-primary" type="submit" name="updatebtn">Update</button>
